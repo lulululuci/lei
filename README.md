@@ -1,1 +1,70 @@
-# lei
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario con reCAPTCHA</title>
+
+  <!-- reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+  <script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "pIz6BavMH5IcnMoL7",
+      });
+   })();
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Formulario</h2>
+
+    <form id="contactForm">
+      <div>
+        <label for="name">Nombre</label><br>
+        <input type="text" id="name" name="name" placeholder="Tu nombre" required />
+      </div>
+
+      <div>
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email" placeholder="nombre@gmail.com" required />
+      </div>
+
+      <div>
+        <label for="subject">Asunto</label><br>
+        <input type="text" id="subject" name="subject" placeholder="Motivo del mensaje" required />
+      </div>
+
+      <div>
+        <label for="message">Mensaje</label><br>
+        <textarea id="message" name="message" rows="4" placeholder="Escribí tu mensaje aquí..." required></textarea>
+      </div>
+
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="6LfLQwEsAAAAADCCjeotqG_obecgQlY3fVzgSZ0Z"></div>
+
+      <br>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+   <script>
+     const form = document.getElementById("contactForm");
+     form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+     emailjs.send("service_8v1xq4g", "template_o9cet14", {
+          from_name: form.name.value,
+          from_email: form.email.value,
+          subject: form.subject.value,
+          message: form.message.value,
+        })
+        .then((response) => {
+          console.log("Correo enviado con éxito", response.status, response.text);
+           });
+          </script>
+</body>
+</html>
